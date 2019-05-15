@@ -12,15 +12,15 @@ public:
 	};
 
 private:
-	const char* name;
-	MeasurmentUnit unit;
-	std::chrono::time_point<std::chrono::steady_clock> start;
-	std::chrono::time_point<std::chrono::steady_clock> end;
-	std::chrono::duration<float> duration;
+	const char* m_Name;
+	MeasurmentUnit m_Unit;
+	std::chrono::time_point<std::chrono::steady_clock> m_Start;
+	//Have to keep this as a member variable to improve the timer accuracy. 
+	std::chrono::time_point<std::chrono::steady_clock> m_End;
 public:
 	Timer();
-	Timer(MeasurmentUnit unit);
+	Timer(const MeasurmentUnit& unit);
 	Timer(const char* name);
-	Timer(const char* name, MeasurmentUnit unit);
+	Timer(const char* name, const MeasurmentUnit& unit);
 	~Timer();
 };
