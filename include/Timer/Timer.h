@@ -6,12 +6,10 @@
 class Timer
 {
 public:
-
-	enum class MeasurmentUnit
+	enum MeasurmentUnit
 	{
 		MILLISECONDS = 0, SECONDS, MINUTES
 	};
-
 private:
 	const char* m_Name;
 	MeasurmentUnit m_Unit;
@@ -19,24 +17,24 @@ private:
 	std::chrono::time_point<std::chrono::steady_clock> m_End;
 public:
 	Timer()
-		: m_Name("Unknown"), m_Unit(MeasurmentUnit::MILLISECONDS)
+		: m_Name("Unknown"), m_Unit(MILLISECONDS)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	Timer(const MeasurmentUnit unit)
+	Timer(MeasurmentUnit unit)
 		: m_Name("Unknown"), m_Unit(unit)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
 	Timer(const char* name)
-		: m_Name(name), m_Unit(MeasurmentUnit::MILLISECONDS)
+		: m_Name(name), m_Unit(MILLISECONDS)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	Timer(const char* name, const MeasurmentUnit unit)
+	Timer(const char* name, MeasurmentUnit unit)
 		: m_Name(name), m_Unit(unit)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
@@ -49,13 +47,13 @@ public:
 
 		switch (m_Unit)
 		{
-		case MeasurmentUnit::MILLISECONDS:
+		case MILLISECONDS:
 			std::cout << "Function '" << m_Name << "' took: " << 1000 * duration.count() << " MS." << std::endl;
 			break;
-		case MeasurmentUnit::SECONDS:
+		case SECONDS:
 			std::cout << "Function '" << m_Name << "' took: " << duration.count() << " seconds." << std::endl;
 			break;
-		case MeasurmentUnit::MINUTES:
+		case MINUTES:
 			std::cout << "Function '" << m_Name << "' took: " << duration.count() / 60 << " minutes." << std::endl;
 			break;
 		}
