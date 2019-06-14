@@ -65,15 +65,15 @@ public:
 
 		switch (m_Unit)
 		{
-		case MILLISECONDS:
-			std::cout << "Function \"" << m_Name << "\" took: " << 1000 * duration.count() << " MS." << std::endl;
-			break;
-		case SECONDS:
-			std::cout << "Function \"" << m_Name << "\" took: " << duration.count() << " seconds." << std::endl;
-			break;
-		case MINUTES:
-			std::cout << "Function \"" << m_Name << "\" took: " << duration.count() / 60 << " minutes." << std::endl;
-			break;
+			case MILLISECONDS:
+				std::cout << "Function \"" << m_Name << "\" took: " << 1000 * duration.count() << " MS." << std::endl;
+				break;
+			case SECONDS:
+				std::cout << "Function \"" << m_Name << "\" took: " << duration.count() << " seconds." << std::endl;
+				break;
+			case MINUTES:
+				std::cout << "Function \"" << m_Name << "\" took: " << duration.count() / 60 << " minutes." << std::endl;
+				break;
 		}
 
 		m_Start = std::chrono::high_resolution_clock::now();
@@ -89,8 +89,8 @@ public:
 		switch (m_Unit)
 		{
 			case MILLISECONDS: return 1000 * duration.count();
-			case SECONDS: return duration.count();
-			case MINUTES: return duration.count() / 60;
+			case SECONDS:      return duration.count();
+			case MINUTES:      return duration.count() / 60;
 		}
 	}
 
