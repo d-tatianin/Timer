@@ -23,5 +23,6 @@ Observational error: ~0.15 ms.
 - `MILLISECONDS`
 - `SECONDS`
 - `MINUTES`
+
 The timer automatically converts the elapsed time into selected measurement unit whenever neccessary.
 
