@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+#include <stdio.h>
 #include <chrono>
 
 class Timer
@@ -15,6 +15,7 @@ private:
 	MeasurmentUnit m_Unit;
 	std::chrono::time_point<std::chrono::steady_clock> m_Start;
 	std::chrono::time_point<std::chrono::steady_clock> m_End;
+	std::chrono::duration<float> m_Duration;
 	bool m_ShowResult;
 public:
 	Timer()
@@ -61,37 +62,46 @@ public:
 	void ResetAndShowResult()
 	{
 		m_End = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<float> duration = m_End - m_Start;
+		m_Duration = m_End - m_Start;
 
 		switch (m_Unit)
 		{
 			case MILLISECONDS:
-				std::cout << "Function \"" << m_Name << "\" took: " << 1000 * duration.count() << " MS." << std::endl;
+				printf("Function \"%s\" took: %f ms.\n", m_Name, 1000.0f * m_Duration.count());
 				break;
 			case SECONDS:
-				std::cout << "Function \"" << m_Name << "\" took: " << duration.count() << " seconds." << std::endl;
+				printf("Function \"%s\" took: %f seconds.\n", m_Name, m_Duration.count());
 				break;
 			case MINUTES:
-				std::cout << "Function \"" << m_Name << "\" took: " << duration.count() / 60 << " minutes." << std::endl;
+				printf("Function \"%s\" took: %f minutes.\n", m_Name, m_Duration.count());
 				break;
 		}
 
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	double ResetAndReturnTime()
+	float ResetAndGetTime()
 	{
 		m_End = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<float> duration = m_End - m_Start;
+		m_Duration = m_End - m_Start;
 
 		m_Start = std::chrono::high_resolution_clock::now();
 
 		switch (m_Unit)
 		{
-			case MILLISECONDS: return 1000 * duration.count();
-			case SECONDS:      return duration.count();
-			case MINUTES:      return duration.count() / 60;
+			case MILLISECONDS: return 1000.0f * m_Duration.count();
+			case SECONDS:      return m_Duration.count();
+			case MINUTES:      return m_Duration.count() / 60.0f;
 		}
+
+		return -1.0f;
+	}
+
+	float GetTime()
+	{
+		m_End = std::chrono::high_resolution_clock::now();
+		m_Duration = m_End - m_Start;
+		return m_Duration.count();
 	}
 
 	~Timer()
