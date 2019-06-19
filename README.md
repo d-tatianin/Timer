@@ -1,11 +1,28 @@
 # Timer
-A simple C++ timer for measuring the performance of your application.
+A simple header-only C++ timer for measuring the performance of your application.
+
+Observational error: ~0.15 ms.
 
 ## Using the timer:
-### - Create an instance of timer in the scope (function/method) you want to measure the performance of. 
-- First parameter is optional and it takes in a string literal, which is used to set the name of the current timer instance, set to         "Unknown" unless explicitly specified. 
-- Second parameter is optional and is responsible for setting the unit of measurment, it is set to MILISECONDS by default unless otherwise   specified. You can also set it to SECONDS, or MINUTES.
+### - Create an instance of Time by calling one of the constructors.
+- `Timer()` -> Sets the timer name to `"Unknown"` and the measurement unit to `MILLISECONDS`. Result is printed upon destructor call.
+- `Timer(MeasurmentUnit unit)` -> Sets the timer name to `"Unknown"` and the measurement unit to `unit`. Result is printed upon destructor call.
+- `Timer(const char* name)` -> Sets the timer name to `name` and the measurement unit to `MILLISECONDS`. Result is printed upon destructor call.
+- `Timer(const char* name, bool printResultUponDestruction)` -> Sets the timer name to `name` and the measurement unit to `MILLISECONDS`. Result is printed upon destructor call if `printResultUponDestruction` is `true`.
+- `Timer(const char* name, MeasurmentUnit unit)` -> Sets the timer name to `name` and the measurement unit to `unit`. Result is printed upon destructor call.
+- `Timer(const char* name, MeasurmentUnit unit, bool printResultUponDestruction)` -> Sets the timer name to `name` and the measurement unit to `unit`. Result is printed upon destructor call if `printResultUponDestruction` is `true`.
+---
+### - Getting your result:
+- `~Timer()` -> same as `ResetAndShowResult()` unless `printResultUponDestruction` is `false`.
+- `void Reset()` -> Resets the timer but does not return nor print the result.
+- `void ResetAndShowResult()` -> Logs the result to the console and resets the timer.
+- `float ResetAndGetTime()` -> Resets the timer and returns the elapsed time converted to the measurement unit selected.
+- `float GetTime()` -> Returns the elapsed time converted to the measurement unit selected but does not reset the timer.
+---
+### - There is a total of 3 available measurement units that reside inside the unscoped MeasurementUnit enum:
+- `MILLISECONDS`
+- `SECONDS`
+- `MINUTES`
 
-### - The desturctor is automatically called after exiting the scope, which will log a message to the console containing the name of the timer, as well as the amount of time the timer lived for before getting destroyed.
-
+The timer automatically converts the elapsed time into selected measurement unit whenever neccessary.
 
