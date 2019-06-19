@@ -101,7 +101,15 @@ public:
 	{
 		m_End = std::chrono::high_resolution_clock::now();
 		m_Duration = m_End - m_Start;
-		return m_Duration.count();
+
+		switch (m_Unit)
+		{
+		case MILLISECONDS: return 1000.0f * m_Duration.count();
+		case SECONDS:      return m_Duration.count();
+		case MINUTES:      return m_Duration.count() / 60.0f;
+		}
+
+		return -1.0f;
 	}
 
 	~Timer()
