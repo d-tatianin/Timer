@@ -104,9 +104,9 @@ public:
 
 		switch (m_Unit)
 		{
-		case MILLISECONDS: return 1000.0f * m_Duration.count();
-		case SECONDS:      return m_Duration.count();
-		case MINUTES:      return m_Duration.count() / 60.0f;
+			case MILLISECONDS: return 1000.0f * m_Duration.count();
+			case SECONDS:      return m_Duration.count();
+			case MINUTES:      return m_Duration.count() / 60.0f;
 		}
 
 		return -1.0f;
