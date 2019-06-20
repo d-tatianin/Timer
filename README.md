@@ -19,10 +19,11 @@ Observational error: ~200 nanoseconds.
 - `float ResetAndGetTime()` -> Resets the timer and returns the elapsed time converted to the measurement unit selected.
 - `float GetTime()` -> Returns the elapsed time converted to the measurement unit selected but does not reset the timer.
 ---
-### - There is a total of 3 available measurement units that reside inside the unscoped MeasurementUnit enum:
+### - There is a total of 5 available measurement units that reside inside the unscoped MeasurementUnit enum:
+- `NANOSECONDS`
+- `MICROSECONDS`
 - `MILLISECONDS`
 - `SECONDS`
 - `MINUTES`
 
-The timer automatically converts the elapsed time into selected measurement unit whenever neccessary.
-
+The timer automatically converts elapsed time into selected measurement unit whenever neccessary.
