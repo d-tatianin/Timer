@@ -1,7 +1,7 @@
 # Timer
 A simple header-only C++ timer for measuring the performance of your application.
 
-Observational error: ~0.15 ms.
+Observational error: ~0.0002 ms.
 
 ## Using the timer:
 ### - Create an instance of Time by calling one of the constructors.
