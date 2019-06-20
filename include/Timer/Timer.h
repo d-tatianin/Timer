@@ -6,9 +6,9 @@
 class Timer
 {
 public:
-	enum MeasurmentUnit
+	enum MeasurmentUnit : int
 	{
-		NANOSECONDS, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES
+		NANOSECONDS = 0, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES
 	};
 private:
 	const char* m_Name;
@@ -114,13 +114,13 @@ private:
 	{
 		switch (unit)
 		{
-			case NANOSECONDS:  return 1000000000 * seconds;
-			case MICROSECONDS: return 1000000 * seconds;
-			case MILLISECONDS: return 1000.0f * seconds;
+			case NANOSECONDS:  return 1000000000.0 * seconds;
+			case MICROSECONDS: return 1000000.0 * seconds;
+			case MILLISECONDS: return 1000.0 * seconds;
 			case SECONDS:      return seconds;
-			case MINUTES:      return seconds / 60.0f;
+			case MINUTES:      return seconds / 60.0;
 		}
 
-		return -1.0f;
+		return -1.0;
 	}
 };
