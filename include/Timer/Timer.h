@@ -8,14 +8,14 @@ class Timer
 public:
 	enum MeasurmentUnit
 	{
-		MILLISECONDS = 0, SECONDS, MINUTES
+		NANOSECONDS, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES
 	};
 private:
 	const char* m_Name;
 	MeasurmentUnit m_Unit;
 	std::chrono::time_point<std::chrono::steady_clock> m_Start;
 	std::chrono::time_point<std::chrono::steady_clock> m_End;
-	std::chrono::duration<float> m_Duration;
+	std::chrono::duration<double> m_Duration;
 	bool m_ShowResult;
 public:
 	Timer()
@@ -66,55 +66,61 @@ public:
 
 		switch (m_Unit)
 		{
+			case NANOSECONDS:
+				printf("Function \"%s\" took: %f nanoseconds.\n", m_Name, ConvertSecondsTo(m_Duration.count(), NANOSECONDS));
+				break;
+			case MICROSECONDS:
+				printf("Function \"%s\" took: %f microseconds.\n", m_Name, ConvertSecondsTo(m_Duration.count(), MICROSECONDS));
+				break;
 			case MILLISECONDS:
-				printf("Function \"%s\" took: %f ms.\n", m_Name, 1000.0f * m_Duration.count());
+				printf("Function \"%s\" took: %f ms.\n", m_Name, ConvertSecondsTo(m_Duration.count(), MILLISECONDS));
 				break;
 			case SECONDS:
 				printf("Function \"%s\" took: %f seconds.\n", m_Name, m_Duration.count());
 				break;
 			case MINUTES:
-				printf("Function \"%s\" took: %f minutes.\n", m_Name, m_Duration.count());
+				printf("Function \"%s\" took: %f minutes.\n", m_Name, ConvertSecondsTo(m_Duration.count(), MINUTES));
 				break;
 		}
 
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	float ResetAndGetTime()
+	double ResetAndGetTime()
 	{
 		m_End = std::chrono::high_resolution_clock::now();
 		m_Duration = m_End - m_Start;
 
 		m_Start = std::chrono::high_resolution_clock::now();
 
-		switch (m_Unit)
-		{
-			case MILLISECONDS: return 1000.0f * m_Duration.count();
-			case SECONDS:      return m_Duration.count();
-			case MINUTES:      return m_Duration.count() / 60.0f;
-		}
-
-		return -1.0f;
+		return ConvertSecondsTo(m_Duration.count(), m_Unit);
 	}
 
-	float GetTime()
+	double GetTime()
 	{
 		m_End = std::chrono::high_resolution_clock::now();
 		m_Duration = m_End - m_Start;
 
-		switch (m_Unit)
-		{
-			case MILLISECONDS: return 1000.0f * m_Duration.count();
-			case SECONDS:      return m_Duration.count();
-			case MINUTES:      return m_Duration.count() / 60.0f;
-		}
-
-		return -1.0f;
+		return ConvertSecondsTo(m_Duration.count(), m_Unit);
 	}
 
 	~Timer()
 	{
 		if(m_ShowResult)
 			ResetAndShowResult();
+	}
+private:
+	inline double ConvertSecondsTo(double seconds, MeasurmentUnit unit)
+	{
+		switch (unit)
+		{
+			case NANOSECONDS:  return 1000000000 * seconds;
+			case MICROSECONDS: return 1000000 * seconds;
+			case MILLISECONDS: return 1000.0f * seconds;
+			case SECONDS:      return seconds;
+			case MINUTES:      return seconds / 60.0f;
+		}
+
+		return -1.0f;
 	}
 };
