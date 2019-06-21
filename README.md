@@ -1,7 +1,7 @@
 # Timer
 A simple header-only C++ timer for measuring the performance of your application.
 
-Observational error: ~200 nanoseconds.
+Observational error: ~100 nanoseconds in release with optimizations/inlining enabled.
 
 ## Using the timer:
 ### - Create an instance of Timer by calling one of the constructors.
