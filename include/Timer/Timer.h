@@ -6,13 +6,13 @@
 class Timer
 {
 public:
-	enum MeasurmentUnit : int
+	enum TimeUnit : int
 	{
 		NANOSECONDS = 0, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES
 	};
 private:
 	const char* m_Name;
-	MeasurmentUnit m_Unit;
+	TimeUnit m_Unit;
 	std::chrono::time_point<std::chrono::steady_clock> m_Start;
 	std::chrono::time_point<std::chrono::steady_clock> m_End;
 	std::chrono::duration<double> m_Duration;
@@ -24,7 +24,7 @@ public:
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	Timer(MeasurmentUnit unit)
+	Timer(TimeUnit unit)
 		: m_Name("Unknown"), m_Unit(unit), m_ShowResult(true)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
@@ -42,13 +42,13 @@ public:
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	Timer(const char* name, MeasurmentUnit unit)
+	Timer(const char* name, TimeUnit unit)
 		: m_Name(name), m_Unit(unit), m_ShowResult(true)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	Timer(const char* name, MeasurmentUnit unit, bool printResultUponDestruction)
+	Timer(const char* name, TimeUnit unit, bool printResultUponDestruction)
 		: m_Name(name), m_Unit(unit), m_ShowResult(printResultUponDestruction)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
@@ -67,19 +67,19 @@ public:
 		switch (m_Unit)
 		{
 			case NANOSECONDS:
-				printf("Function \"%s\" took: %f nanoseconds.\n", m_Name, ConvertSecondsTo(m_Duration.count(), NANOSECONDS));
+				printf("Function \"%s\" took: %f nanoseconds.\n", m_Name, Convert(m_Duration.count()));
 				break;
 			case MICROSECONDS:
-				printf("Function \"%s\" took: %f microseconds.\n", m_Name, ConvertSecondsTo(m_Duration.count(), MICROSECONDS));
+				printf("Function \"%s\" took: %f microseconds.\n", m_Name, Convert(m_Duration.count()));
 				break;
 			case MILLISECONDS:
-				printf("Function \"%s\" took: %f ms.\n", m_Name, ConvertSecondsTo(m_Duration.count(), MILLISECONDS));
+				printf("Function \"%s\" took: %f ms.\n", m_Name, Convert(m_Duration.count()));
 				break;
 			case SECONDS:
 				printf("Function \"%s\" took: %f seconds.\n", m_Name, m_Duration.count());
 				break;
 			case MINUTES:
-				printf("Function \"%s\" took: %f minutes.\n", m_Name, ConvertSecondsTo(m_Duration.count(), MINUTES));
+				printf("Function \"%s\" took: %f minutes.\n", m_Name, Convert(m_Duration.count()));
 				break;
 		}
 
@@ -93,7 +93,7 @@ public:
 
 		m_Start = std::chrono::high_resolution_clock::now();
 
-		return ConvertSecondsTo(m_Duration.count(), m_Unit);
+		return Convert(m_Duration.count());
 	}
 
 	double GetTime()
@@ -101,7 +101,12 @@ public:
 		m_End = std::chrono::high_resolution_clock::now();
 		m_Duration = m_End - m_Start;
 
-		return ConvertSecondsTo(m_Duration.count(), m_Unit);
+		return Convert(m_Duration.count());
+	}
+
+	void SetTimeUnit(TimeUnit unit)
+	{
+		m_Unit = unit;
 	}
 
 	~Timer()
@@ -110,9 +115,9 @@ public:
 			ResetAndShowResult();
 	}
 private:
-	inline double ConvertSecondsTo(double seconds, MeasurmentUnit unit)
+	inline double Convert(double&& seconds)
 	{
-		switch (unit)
+		switch (m_Unit)
 		{
 			case NANOSECONDS:  return 1000000000.0 * seconds;
 			case MICROSECONDS: return 1000000.0 * seconds;
