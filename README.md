@@ -4,7 +4,7 @@ A simple header-only C++ timer for measuring the performance of your application
 Observational error: ~200 nanoseconds.
 
 ## Using the timer:
-### - Create an instance of Time by calling one of the constructors.
+### - Create an instance of Timer by calling one of the constructors.
 - `Timer()` -> Sets the timer name to `"Unknown"` and the unit of time to `MILLISECONDS`. Result is printed upon destructor call.
 - `Timer(TimeUnit unit)` -> Sets the timer name to `"Unknown"` and the unit of time to `unit`. Result is printed upon destructor call.
 - `Timer(const char* name)` -> Sets the timer name to `name` and the unit of time to `MILLISECONDS`. Result is printed upon destructor call.
