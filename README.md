@@ -18,7 +18,7 @@ Observational error: ~100 nanoseconds in release with optimizations/inlining ena
 - `void ResetAndShowResult()` -> Logs the result to the console and resets the timer.
 - `void SetTimeUnit(TimeUnit unit)` -> Sets the unit of time used by the current timer to `unit`.
 - `double ResetAndGetTime()` -> Resets the timer and returns the elapsed time converted to the unit of time selected.
-- `double GetTime()` -> Returns the elapsed time converted to the measurement unit selected but does not reset the timer.
+- `double GetTime()` -> Returns the elapsed time converted to the unit of time selected but does not reset the timer.
 ---
 ### - There is a total of 6 available units of time that reside inside the unscoped Unit enum inside the TimeUnit namespace:
 - `AUTO`
