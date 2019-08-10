@@ -155,9 +155,9 @@ public:
 			ResetAndShowResult();
 	}
 private:
-	void ConvertTime(TimeUnit::Unit explicit_unit = TimeUnit::AUTO)
+	void ConvertTime(TimeUnit::Unit overrideUnit = TimeUnit::AUTO)
 	{
-		switch (explicit_unit == TimeUnit::AUTO ? m_Unit : explicit_unit)
+		switch (overrideUnit == TimeUnit::AUTO ? m_Unit : overrideUnit)
 		{
 		case TimeUnit::AUTO:
 			if (m_PreciseDuration >= 60000000000)
