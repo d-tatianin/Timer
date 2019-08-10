@@ -17,7 +17,7 @@ namespace TimeUnit {
 		MINUTES
 	};
 
-	const char* UnitToString(Unit unit)
+	inline const char* UnitToString(Unit unit)
 	{
 		switch (unit)
 		{
