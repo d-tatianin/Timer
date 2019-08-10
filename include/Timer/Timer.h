@@ -42,11 +42,10 @@ private:
 		high_precision_tp;
 	typedef std::chrono::duration<double, std::nano>
 		high_precision_dr;
-
 private:
 	high_precision_tp m_Start;
 	high_precision_tp m_End;
-    high_precision_dr m_Duration;
+	high_precision_dr m_Duration;
 	double            m_PreciseDuration;
 	TimeUnit::Unit    m_Unit;
 	TimeUnit::Unit    m_AutoUnit;
@@ -154,44 +153,44 @@ private:
 	{
 		switch (m_Unit)
 		{
-			case TimeUnit::AUTO:
-				if (m_PreciseDuration >= 60000000000)
-				{
-					m_PreciseDuration /= 60000000000;
-					m_AutoUnit = TimeUnit::MINUTES;
-				}
-				else if (m_PreciseDuration >= 1000000000)
-				{
-					m_PreciseDuration /= 1000000000;
-					m_AutoUnit = TimeUnit::SECONDS;
-				}
-				else if (m_PreciseDuration >= 1000000)
-				{
-					m_PreciseDuration /= 1000000;
-					m_AutoUnit = TimeUnit::MILLISECONDS;
-				}
-				else if (m_PreciseDuration >= 1000)
-				{
-					m_PreciseDuration /= 1000;
-					m_AutoUnit = TimeUnit::MICROSECONDS;
-				}
-				else
-					m_AutoUnit = TimeUnit::NANOSECONDS;
-				break;
-			case TimeUnit::MICROSECONDS:
-				m_PreciseDuration /= 1000;
-				break;
-			case TimeUnit::MILLISECONDS:
-				m_PreciseDuration /= 1000000;
-				break;
-			case TimeUnit::SECONDS:
-				m_PreciseDuration /= 1000000000;
-				break;
-			case TimeUnit::MINUTES:
+		case TimeUnit::AUTO:
+			if (m_PreciseDuration >= 60000000000)
+			{
 				m_PreciseDuration /= 60000000000;
-				break;
-			default:
-				break;
+				m_AutoUnit = TimeUnit::MINUTES;
+			}
+			else if (m_PreciseDuration >= 1000000000)
+			{
+				m_PreciseDuration /= 1000000000;
+				m_AutoUnit = TimeUnit::SECONDS;
+			}
+			else if (m_PreciseDuration >= 1000000)
+			{
+				m_PreciseDuration /= 1000000;
+				m_AutoUnit = TimeUnit::MILLISECONDS;
+			}
+			else if (m_PreciseDuration >= 1000)
+			{
+				m_PreciseDuration /= 1000;
+				m_AutoUnit = TimeUnit::MICROSECONDS;
+			}
+			else
+				m_AutoUnit = TimeUnit::NANOSECONDS;
+			break;
+		case TimeUnit::MICROSECONDS:
+			m_PreciseDuration /= 1000;
+			break;
+		case TimeUnit::MILLISECONDS:
+			m_PreciseDuration /= 1000000;
+			break;
+		case TimeUnit::SECONDS:
+			m_PreciseDuration /= 1000000000;
+			break;
+		case TimeUnit::MINUTES:
+			m_PreciseDuration /= 60000000000;
+			break;
+		default:
+			break;
 		}
 	}
 };
