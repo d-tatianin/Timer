@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <chrono>
 
+#define DEFAULT_AUTO_UNIT_GETTER_ TimeUnit::MILLISECONDS
+
 namespace TimeUnit {
 
 	enum Unit : int
@@ -118,7 +120,9 @@ public:
 		m_Duration = m_End - m_Start;
 		m_PreciseDuration = m_Duration.count();
 
-		if (m_Unit != TimeUnit::NANOSECONDS)
+		if (m_Unit == TimeUnit::AUTO)
+			ConvertTime(DEFAULT_AUTO_UNIT_GETTER_);
+		else if (m_Unit != TimeUnit::NANOSECONDS)
 			ConvertTime();
 
 		m_Start = std::chrono::high_resolution_clock::now();
@@ -132,7 +136,9 @@ public:
 		m_Duration = m_End - m_Start;
 		m_PreciseDuration = m_Duration.count();
 
-		if (m_Unit != TimeUnit::NANOSECONDS)
+		if (m_Unit == TimeUnit::AUTO)
+			ConvertTime(DEFAULT_AUTO_UNIT_GETTER_);
+		else if (m_Unit != TimeUnit::NANOSECONDS)
 			ConvertTime();
 
 		return m_PreciseDuration;
@@ -149,9 +155,9 @@ public:
 			ResetAndShowResult();
 	}
 private:
-	void ConvertTime()
+	void ConvertTime(TimeUnit::Unit explicit_unit = TimeUnit::AUTO)
 	{
-		switch (m_Unit)
+		switch (explicit_unit == TimeUnit::AUTO ? m_Unit : explicit_unit)
 		{
 		case TimeUnit::AUTO:
 			if (m_PreciseDuration >= 60000000000)
