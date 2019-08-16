@@ -18,10 +18,10 @@ Observational error: ~100 nanoseconds in release with optimizations/inlining ena
 - `void PrintElapsed()` -> Logs the elapsed time to the console but does not reset the timer.
 - `double GetElapsedReset()` -> Resets the timer and returns the elapsed time.
 - `double GetElapsed()` -> Returns the elapsed time but does not reset the timer.
-- `~Timer()` -> same as `PrintElapsed()` unless `scoped` was set `false`.
+- `~Timer()` -> same as `PrintElapsed()` unless `scoped` was set to `false`.
 ---
 ### - Other functions:
-- `void SetTimeUnit(TimeUnit unit)` -> Sets the unit of time used by the current timer to `unit`.
+- `void SetTimeUnit(TimeUnit unit)` -> Sets the unit of time to `unit`.
 - `ostream& operator<<` -> Allows to use any `Timer` object with streams like `cout`, e.g `std::cout << myTimer`. Same as `GetElapsed()`.
 ---
 ### - There is a total of 6 available units of time that reside inside the unscoped Unit enum inside the TimeUnit namespace:
