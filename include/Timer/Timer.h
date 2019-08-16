@@ -141,7 +141,7 @@ public:
 	~Timer()
 	{
 		if(m_ShowResult)
-			PrintElapsedReset();
+			PrintElapsed();
 	}
 private:
 	void PrintResult()
