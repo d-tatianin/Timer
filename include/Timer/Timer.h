@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <iostream>
 #include <chrono>
 
 #define DEFAULT_AUTO_UNIT_GETTER_ TimeUnit::MILLISECONDS
@@ -72,8 +73,8 @@ public:
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	Timer(const char* name, bool printResultUponDestruction)
-		: m_Name(name), m_Unit(TimeUnit::AUTO), m_ShowResult(printResultUponDestruction)
+	Timer(const char* name, bool scoped)
+		: m_Name(name), m_Unit(TimeUnit::AUTO), m_ShowResult(scoped)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
@@ -84,8 +85,8 @@ public:
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	Timer(const char* name, TimeUnit::Unit unit, bool printResultUponDestruction)
-		: m_Name(name), m_Unit(unit), m_ShowResult(printResultUponDestruction)
+	Timer(const char* name, TimeUnit::Unit unit, bool scoped)
+		: m_Name(name), m_Unit(unit), m_ShowResult(scoped)
 	{
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
@@ -95,51 +96,32 @@ public:
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	void ResetAndShowResult()
+	void PrintElapsed()
 	{
 		m_End = std::chrono::high_resolution_clock::now();
-		m_Duration =  m_End - m_Start;
-		m_PreciseDuration = m_Duration.count();
+		PrintResult();
+	}
 
-		if (m_Unit != TimeUnit::NANOSECONDS)
-			ConvertTime();
-
-		printf("Function \"%s\" took %f %s.\n", 
-			m_Name, 
-			m_PreciseDuration, 
-			m_Unit == TimeUnit::AUTO ? 
-			TimeUnit::UnitToString(m_AutoUnit) : 
-			TimeUnit::UnitToString(m_Unit));
-
+	void PrintElapsedReset()
+	{
+		m_End = std::chrono::high_resolution_clock::now();
+		PrintResult();
 		m_Start = std::chrono::high_resolution_clock::now();
 	}
 
-	double ResetAndGetTime()
+	double GetElapsed()
 	{
 		m_End = std::chrono::high_resolution_clock::now();
-		m_Duration = m_End - m_Start;
-		m_PreciseDuration = m_Duration.count();
-
-		if (m_Unit == TimeUnit::AUTO)
-			ConvertTime(DEFAULT_AUTO_UNIT_GETTER_);
-		else if (m_Unit != TimeUnit::NANOSECONDS)
-			ConvertTime();
-
-		m_Start = std::chrono::high_resolution_clock::now();
+		CalculateElapsed();
 
 		return m_PreciseDuration;
 	}
 
-	double GetTime()
+	double GetElapsedReset()
 	{
 		m_End = std::chrono::high_resolution_clock::now();
-		m_Duration = m_End - m_Start;
-		m_PreciseDuration = m_Duration.count();
-
-		if (m_Unit == TimeUnit::AUTO)
-			ConvertTime(DEFAULT_AUTO_UNIT_GETTER_);
-		else if (m_Unit != TimeUnit::NANOSECONDS)
-			ConvertTime();
+		CalculateElapsed();
+		m_Start = std::chrono::high_resolution_clock::now();
 
 		return m_PreciseDuration;
 	}
@@ -149,12 +131,46 @@ public:
 		m_Unit = unit;
 	}
 
+	friend std::ostream& operator<<(std::ostream& stream, Timer& timer)
+	{
+		stream << timer.GetElapsed();
+
+		return stream;
+	}
+
 	~Timer()
 	{
 		if(m_ShowResult)
-			ResetAndShowResult();
+			PrintElapsedReset();
 	}
 private:
+	void PrintResult()
+	{
+		m_Duration = m_End - m_Start;
+		m_PreciseDuration = m_Duration.count();
+
+		if (m_Unit != TimeUnit::NANOSECONDS)
+			ConvertTime();
+
+		printf("Function \"%s\" took %f %s.\n",
+			m_Name,
+			m_PreciseDuration,
+			m_Unit == TimeUnit::AUTO ?
+			TimeUnit::UnitToString(m_AutoUnit) :
+			TimeUnit::UnitToString(m_Unit));
+	}
+
+	void CalculateElapsed()
+	{
+		m_Duration = m_End - m_Start;
+		m_PreciseDuration = m_Duration.count();
+
+		if (m_Unit == TimeUnit::AUTO)
+			ConvertTime(DEFAULT_AUTO_UNIT_GETTER_);
+		else if (m_Unit != TimeUnit::NANOSECONDS)
+			ConvertTime();
+	}
+
 	void ConvertTime(TimeUnit::Unit overrideUnit = TimeUnit::AUTO)
 	{
 		switch (overrideUnit == TimeUnit::AUTO ? m_Unit : overrideUnit)
