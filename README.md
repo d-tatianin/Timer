@@ -1,4 +1,4 @@
-# Timer | [![Build status](https://ci.appveyor.com/api/projects/status/lq05xlr0cdkk4d5a?svg=true)](https://ci.appveyor.com/project/8infy/timer)
+# Timer | [![Build status](https://ci.appveyor.com/api/projects/status/lq05xlr0cdkk4d5a?svg=true)](https://ci.appveyor.com/project/8infy/timer) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/114f8af31d8c4ed88a13f9cdbcdb1c96)](https://www.codacy.com/app/8infy/Timer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=8infy/Timer&amp;utm_campaign=Badge_Grade) |
 A simple header-only C++ timer for measuring the performance of your application.
 
 Observational error: ~100 nanoseconds in release with optimizations/inlining enabled.
