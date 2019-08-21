@@ -5,12 +5,12 @@ Observational error: ~100 nanoseconds in release with optimizations/inlining ena
 
 ## Using the timer
 ### - Create an instance of Timer by calling one of the constructors
--  `Timer()` -> Sets the timer name to `"Unnamed"` and the unit of time to `AUTO`. Result is printed upon destructor call.
--  `Timer(TimeUnit unit)` -> Sets the timer name to `"Unnamed"` and the unit of time to `unit`. Result is printed upon destructor call.
--  `Timer(const char* name)` -> Sets the timer name to `name` and the unit of time to `AUTO`. Result is printed upon destructor call.
--  `Timer(const char* name, bool scoped)` -> Sets the timer name to `name` and the unit of time to `AUTO`. Result is printed upon destructor call if `scoped` was set to `true`.
--  `Timer(const char* name, TimeUnit unit)` -> Sets the timer name to `name` and the unit of time to `unit`. Result is printed upon destructor call.
--  `Timer(const char* name, TimeUnit unit, bool scoped)` -> Sets the timer name to `name` and the unit of time to `unit`. Result is printed upon destructor call if `scoped` was set to `true`.
+-   `Timer()` -> Sets the timer name to `"Unnamed"` and the unit of time to `AUTO`. Result is printed upon destructor call.
+-   `Timer(TimeUnit unit)` -> Sets the timer name to `"Unnamed"` and the unit of time to `unit`. Result is printed upon destructor call.
+-   `Timer(const char* name)` -> Sets the timer name to `name` and the unit of time to `AUTO`. Result is printed upon destructor call.
+-   `Timer(const char* name, bool scoped)` -> Sets the timer name to `name` and the unit of time to `AUTO`. Result is printed upon destructor call if `scoped` was set to `true`.
+-   `Timer(const char* name, TimeUnit unit)` -> Sets the timer name to `name` and the unit of time to `unit`. Result is printed upon destructor call.
+-   `Timer(const char* name, TimeUnit unit, bool scoped)` -> Sets the timer name to `name` and the unit of time to `unit`. Result is printed upon destructor call if `scoped` was set to `true`.
 ---
 ### - Getting your result
 -   `void Reset()` -> Resets the timer but does not return nor print the result.
