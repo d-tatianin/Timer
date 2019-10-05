@@ -4,7 +4,6 @@
 
 int main()
 {
-
     {
         // Scoped timer (meant to be used for measuring a function or a scope)
         Timer scopedTimer("Heap allocation test", TimeUnit::AUTO, true); // AUTO means the timer picks the best suitable measurment unit
