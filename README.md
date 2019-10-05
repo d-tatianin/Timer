@@ -24,7 +24,7 @@ Observational error: ~100 nanoseconds in release with optimizations/inlining ena
 -   `void SetTimeUnit(TimeUnit unit)` -> Sets the unit of time to `unit`.
 -   `ostream& operator<<` -> Allows to use any `Timer` object with streams like `cout`, e.g `std::cout << myTimer`. Same as `GetElapsed()`.
 ---
-### - There is a total of 6 available units of time that reside inside the unscoped Unit enum inside the TimeUnit namespace
+### - There is a total of 6 available units of time that reside inside the scoped TimeUnit enum.
 -   `AUTO`
 -   `NANOSECONDS`
 -   `MICROSECONDS`
